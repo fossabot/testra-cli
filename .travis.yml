@@ -1,0 +1,11 @@
+language: go
+
+sudo: false
+env:
+go:
+  - 1.10
+
+script:
+  - go install
+  - go test -v
+  - go build -o dist/testra
