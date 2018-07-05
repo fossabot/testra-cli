@@ -6,6 +6,7 @@ go:
   - 1.10
 
 script:
-  - go install
+  - mkdir api & sh scripts/generate-testra-api-client.sh
+  - dep ensure
   - go test -v
-  - go build -o dist/testra
+  - go build -ldflags="-w -s" -o dist/testra

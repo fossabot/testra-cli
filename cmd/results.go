@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"errors"
 )
 
 // resultsCmd represents the results command
@@ -16,13 +17,19 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
+	Args: func(cmd *cobra.Command, args []string) error {
+		if len(args) < 1 {
+			return errors.New("requires at least one arg")
+		}
+		return fmt.Errorf("invalid command specified: %s", args[0])
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("results called")
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(resultsCmd)
+	rootCmd.AddCommand(resultsCmd)
 
 	// Here you will define your flags and configuration settings.
 
