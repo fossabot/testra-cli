@@ -1,11 +1,11 @@
 package handlers
 
-import "github.com/testra-tech/testra-cli/api/models"
+/*import "github.com/testra-tech/testra-cli/api/models"
 
 
 func UpdateResult(id string, result models.TestResult) {
 
-}
+}*/
 
 func DeleteResult(id string) {
 

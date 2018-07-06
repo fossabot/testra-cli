@@ -1,6 +1,6 @@
 package handlers
 
-import "github.com/testra-tech/testra-cli/api/models"
+/*import "github.com/testra-tech/testra-cli/api/models"
 
 func CreateExecution(execRequest models.ExecutionRequest) {
 
@@ -8,7 +8,7 @@ func CreateExecution(execRequest models.ExecutionRequest) {
 
 func UpdateExecution(id string, execRequest models.ExecutionRequest) {
 
-}
+}*/
 
 func DeleteExecution(id string) {
 
