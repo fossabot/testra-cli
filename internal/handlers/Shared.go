@@ -7,6 +7,7 @@ import (
 	apiClient "github.com/testra-tech/testra-cli/api/client"
 	httpTransport "github.com/go-openapi/runtime/client"
 	"log"
+	"github.com/mgutz/ansi"
 )
 
 func ApiClient() *client.Testra {
@@ -15,13 +16,11 @@ func ApiClient() *client.Testra {
 	transport := httpTransport.New("localhost:8080", apiClient.DefaultBasePath, []string{"http"})
 
 	// create the API client, with the transport
-	client := apiClient.New(transport, strfmt.Default)
-
-	return client
+	return apiClient.New(transport, strfmt.Default)
 }
 
 func checkErr(err error) {
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(ansi.Color(err.Error(), "red+b"))
 	}
 }

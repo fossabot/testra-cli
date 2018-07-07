@@ -26,6 +26,4 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize()
-
-	rootCmd.PersistentFlags().BoolP("interactive", "i", false, "Interactive mode")
 }

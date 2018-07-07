@@ -259,6 +259,12 @@
   version = "v0.3.0"
 
 [[projects]]
+  name = "gopkg.in/kyokomi/emoji.v1"
+  packages = ["."]
+  revision = "2e9a9507333f3ee28f3fab88c2c3aba34455d734"
+  version = "v1.5.1"
+
+[[projects]]
   branch = "v2"
   name = "gopkg.in/mgo.v2"
   packages = [
@@ -276,6 +282,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f78aebfef66406f0f49c4656f3e7d2c7adc4f5975d44862e81df30641bac1d7d"
+  inputs-digest = "0b3b088c40fbec2cfcf5a785ba739a1ab319538f2e006c3d6685cdd33c3e4a3b"
   solver-name = "gps-cdcl"
   solver-version = 1

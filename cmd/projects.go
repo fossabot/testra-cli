@@ -14,15 +14,15 @@ import (
 
 // projectsCmd represents the projects command
 var projectsCmd = &cobra.Command{
-	Use:                    "projects",
-	Short:                  "This command is useful to manage projects in testra",
-	Long:                   ``,
+	Use: "projects",
+	Short: "Mange projects in Testra",
+	Long: ``,
 	BashCompletionFunction: "projects",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
-			return errors.New("requires at least one arg")
+			return errors.New("Requires at least one arg")
 		}
-		return fmt.Errorf("invalid command specified: %s", args[0])
+		return fmt.Errorf("Invalid command specified: %s", args[0])
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
@@ -34,13 +34,6 @@ var createProjectCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Creates a new project",
 	Long:  ``,
-	//Args: func(cmd *cobra.Command, args []string) error {
-	//	return fmt.Errorf("invalid command specified: %s", args[0])
-	//	//if len(args) == 1 && args[0] == "interactive" {
-	//	//	return errors.New("requires at least one arg")
-	//	//}
-	//	//return fmt.Errorf("invalid command specified: %s", args[0])
-	//},
 	PreRun: func(cmd *cobra.Command, args []string) {
 		config.InitConfig()
 	},
@@ -52,7 +45,9 @@ var createProjectCmd = &cobra.Command{
 
 		if isInteractive {
 			var readLine string
+			fmt.Println()
 			reader := bufio.NewReader(os.Stdin)
+
 			fmt.Print("Project Name : ")
 			readLine, _ = reader.ReadString('\n')
 			name = strings.TrimSuffix(readLine, "\n")
@@ -66,6 +61,47 @@ var createProjectCmd = &cobra.Command{
 		}
 
 		handlers.CreateProject(name, description)
+	},
+}
+
+// createProjectCmd represents the create sub command
+var updateProjectCmd = &cobra.Command{
+	Use:   "update",
+	Short: "Updates existing project",
+	Long:  ``,
+	PreRun: func(cmd *cobra.Command, args []string) {
+		config.InitConfig()
+	},
+	Run: func(cmd *cobra.Command, args []string) {
+		isInteractive, _ := cmd.Flags().GetBool("interactive")
+
+		var projectId string
+		var name string
+		var description string
+
+		if isInteractive {
+			var readLine string
+			fmt.Println()
+			reader := bufio.NewReader(os.Stdin)
+
+			fmt.Print("Project Id : ")
+			readLine, _ = reader.ReadString('\n')
+			projectId = strings.TrimSuffix(readLine, "\n")
+
+			fmt.Print("Project Name : ")
+			readLine, _ = reader.ReadString('\n')
+			name = strings.TrimSuffix(readLine, "\n")
+
+			fmt.Print("Project Description : ")
+			readLine, _ = reader.ReadString('\n')
+			description = strings.TrimSuffix(readLine, "\n")
+		} else {
+			projectId, _ = cmd.Flags().GetString("id")
+			name, _ = cmd.Flags().GetString("name")
+			description, _ = cmd.Flags().GetString("description")
+		}
+
+		handlers.UpdateProject(projectId, name, description)
 	},
 }
 
@@ -115,21 +151,27 @@ func init() {
 
 	// Sub commands in projects
 	projectsCmd.AddCommand(createProjectCmd)
+	projectsCmd.AddCommand(updateProjectCmd)
 	projectsCmd.AddCommand(removeProjectCmd)
 	projectsCmd.AddCommand(showProjectCmd)
 	projectsCmd.AddCommand(listProjectsCmd)
 
-	// Persistent flags for createProjectCmd
+	// Flags for createProjectCmd
 	createProjectCmd.Flags().StringP("name", "n", "", "Project name")
 	createProjectCmd.Flags().StringP("description", "d", "", "Project description")
+	createProjectCmd.Flags().BoolP("interactive", "i", false, "Interactive mode")
+	
+	// Flags for createProjectCmd
+	updateProjectCmd.Flags().String("id", "", "Project id")
+	updateProjectCmd.Flags().StringP("name", "n", "", "Project name")
+	updateProjectCmd.Flags().StringP("description", "d", "", "Project description")
+	updateProjectCmd.Flags().BoolP("interactive", "i", false, "Interactive mode")
 
-	// Persistent flags for removeProjectCmd
+	// Flags for removeProjectCmd
 	removeProjectCmd.Flags().String("id", "", "Project id")
+	removeProjectCmd.MarkFlagRequired("id")
 
-	// Persistent flags for showProjectCmd
+	// Flags for showProjectCmd
 	showProjectCmd.Flags().String("id", "", "Project id")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	//projectsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	showProjectCmd.MarkFlagRequired("id")
 }
