@@ -33,7 +33,7 @@
   branch = "master"
   name = "github.com/go-openapi/runtime"
 
-[[constraint]]
+[[override]]
   branch = "master"
   name = "github.com/go-openapi/spec"
 

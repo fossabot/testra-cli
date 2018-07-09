@@ -4,38 +4,40 @@ import (
 	"github.com/testra-tech/testra-cli/internal/utils"
 	"github.com/testra-tech/testra-cli/api/client/project"
 	"github.com/testra-tech/testra-cli/api/models"
+	"github.com/testra-tech/testra-cli/api"
+
 )
 
-var headers = []string{"Id", "Name", "Description"}
+var projectHeaders = []string{"Id", "Name"}
 
 func CreateProject(name string, desc string) {
 	body := models.ProjectRequest{desc, &name}
 
-	createProjectResp, err :=
-		ApiClient().Project.CreateProject(project.NewCreateProjectParams().WithBody(&body))
+	resp, err :=
+		api.TestraClient().Project.CreateProject(project.NewCreateProjectParams().WithBody(&body))
 	checkErr(err)
 
-	utils.SuccessF("%s created successfully", *createProjectResp.Payload.Name)
+	utils.SuccessF("%s created successfully", *resp.Payload.Name)
 }
 
 func UpdateProject(id string, name string, desc string) {
 	body := models.ProjectRequest{desc, &name}
 
-	updateProjectResp, err :=
-		ApiClient().Project.UpdateProject(project.NewUpdateProjectParams().WithBody(&body).WithID(id))
+	resp, err :=
+		api.TestraClient().Project.UpdateProject(project.NewUpdateProjectParams().WithBody(&body).WithID(id))
 	checkErr(err)
 
-	utils.SuccessF("%s updated successfully", *updateProjectResp.Payload.Name)
+	utils.SuccessF("%s updated successfully", *resp.Payload.Name)
 }
 
 func DeleteProject(id string) {
 
-	getProjectresp, err := ApiClient().Project.GetProject(project.NewGetProjectParams().WithID(id))
+	resp, err := api.TestraClient().Project.GetProject(project.NewGetProjectParams().WithID(id))
 	checkErr(err)
 
-	projectName := *getProjectresp.Payload.Name
+	projectName := *resp.Payload.Name
 
-	_, err = ApiClient().Project.DeleteProject(project.NewDeleteProjectParams().WithID(id))
+	_, err = api.TestraClient().Project.DeleteProject(project.NewDeleteProjectParams().WithID(id))
 	checkErr(err)
 
 	utils.SuccessF("%s deleted successfully", projectName)
@@ -43,18 +45,15 @@ func DeleteProject(id string) {
 
 func GetProject(id string) {
 
-	resp, err := ApiClient().Project.GetProject(project.NewGetProjectParams().WithID(id))
+	resp, err := api.TestraClient().Project.GetProject(project.NewGetProjectParams().WithID(id))
 	checkErr(err)
 
-	var rows [][]string
-	rows = append(rows, []string{*resp.Payload.ID, *resp.Payload.Name, resp.Payload.Description})
-
-	utils.PrintTab(headers, rows)
+	utils.DumpStruct(*resp.Payload)
 }
 
 func ListProjects() {
 
-	resp, err := ApiClient().Project.GetProjects(nil)
+	resp, err := api.TestraClient().Project.GetProjects(nil)
 	checkErr(err)
 
 	if len(resp.Payload) == 0 {
@@ -65,8 +64,8 @@ func ListProjects() {
 	var rows [][]string
 
 	for _, element := range resp.Payload {
-		rows = append(rows, []string{*element.ID, *element.Name, element.Description})
+		rows = append(rows, []string{*element.ID, *element.Name})
 	}
 
-	utils.PrintTab(headers, rows)
+	utils.PrintTab(projectHeaders, rows)
 }

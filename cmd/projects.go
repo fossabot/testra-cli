@@ -15,7 +15,7 @@ import (
 // projectsCmd represents the projects command
 var projectsCmd = &cobra.Command{
 	Use: "projects",
-	Short: "Mange projects in Testra",
+	Short: "Manage projects in Testra",
 	Long: ``,
 	BashCompletionFunction: "projects",
 	Args: func(cmd *cobra.Command, args []string) error {
