@@ -19,5 +19,6 @@
 .vscode
 
 # Auto generated sources and dependencies
-api
 vendor
+api/client
+api/models
