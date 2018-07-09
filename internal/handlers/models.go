@@ -12,10 +12,3 @@ type TestExecution struct {
 	Host        string
 	BuildRef    string
 }
-
-//type TestScenarioResult struct {
-//	Name string,
-//	Status string,
-//	Duration int32,
-//
-//}

@@ -33,7 +33,9 @@ var resultsListCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		projectId, _ := cmd.Flags().GetString("projectId")
 		executionId, _ := cmd.Flags().GetString("executionId")
-		handlers.ListResults(projectId, executionId)
+		status, _ := cmd.Flags().GetString("status")
+
+		handlers.ListResults(projectId, executionId, status)
 	},
 }
 
@@ -44,6 +46,8 @@ func init() {
 
 	resultsListCmd.Flags().String("projectId", "", "Project Id")
 	resultsListCmd.Flags().String("executionId", "", "Execution Id")
+	resultsListCmd.Flags().StringP("status", "s", "", "Filter only failed results")
+
 	resultsListCmd.MarkFlagRequired("projectId")
 	resultsListCmd.MarkFlagRequired("executionId")
 }

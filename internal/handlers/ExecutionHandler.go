@@ -97,12 +97,12 @@ func ListExecutions(projectId string) {
 	for _, execution := range resp.Payload {
 		var endTime string = ""
 		if execution.EndTime != nil {
-			endTime = time.Unix(*execution.EndTime/1000, 0).Format("_2 Jan 2006 15:04:05")
+			endTime = time.Unix(*execution.EndTime/1000, 0).Format(DateTimeFormat)
 		}
 
 		rows = append(rows, []string{
 			*execution.ID,
-			time.Unix(*execution.StartTime/1000, 0).Format("_2 Jan 2006 15:04:05"),
+			time.Unix(*execution.StartTime/1000, 0).Format(DateTimeFormat),
 			endTime,
 			*execution.Environment,
 			*execution.Branch,

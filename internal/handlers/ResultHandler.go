@@ -27,14 +27,16 @@ var yellowStyle = chalk.Yellow.NewStyle()
 
 }*/
 
-func ListResults(projectId string, execId string) {
+func ListResults(projectId string, execId string, status string) {
 	utils.StartSpin()
 	defer utils.StopSpin()
+	statusInUpper := strings.ToUpper(status)
 	resp, err :=
 		api.TestraClient().Result.
 			GetResults(result.NewGetResultsParams().
 			WithProjectID(projectId).
-			WithExecutionID(execId))
+			WithExecutionID(execId).
+			WithResult(&statusInUpper))
 	checkErr(err)
 
 	var buffer bytes.Buffer
@@ -70,7 +72,7 @@ func ListResults(projectId string, execId string) {
 }
 
 func getStepResult(index *int64, result *models.EnrichedTestResult) (*string, error) {
-	for _, stepResult := range  result.StepResults {
+	for _, stepResult := range result.StepResults {
 		if *stepResult.Index == *index {
 			return stepResult.Result, nil
 		}
