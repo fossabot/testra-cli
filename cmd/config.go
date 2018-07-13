@@ -13,7 +13,8 @@ import (
 var configCmd = &cobra.Command{
 	Use:   "config",
 	Short: "Initialise or update testra configurations",
-	Long: ``,
+	Long:  ``,
+	Args:  cobra.NoArgs,
 	PreRun: func(cmd *cobra.Command, args []string) {
 		config.SetConfigFileAbsPath()
 	},
@@ -25,29 +26,36 @@ var configCmd = &cobra.Command{
 var setSubCmd = &cobra.Command{
 	Use:   "set",
 	Short: "Set config using flags",
-	Long: ``,
+	Long:  ``,
 	PreRun: func(cmd *cobra.Command, args []string) {
-		config.SetConfigFileAbsPath()
+		config.InitConfig()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		baseUrl, _ := cmd.Flags().GetString("baseUrl")
+		projectId, _ := cmd.Flags().GetString(PROJECT_ID_FLAG_NAME)
 
-		isValid, _ := config.IsValidBaseUrl(baseUrl)
-
-		if isValid {
-			config.WriteConfigToFile(baseUrl)
-			os.Exit(0)
+		if baseUrl == EMPTY_STR {
+			baseUrl = viper.GetString("baseUrl")
 		} else {
-			utils.DangerF("Invalid base url. Given: %s", baseUrl)
-			os.Exit(1)
+			isValid, _ := config.IsValidBaseUrl(baseUrl)
+			if !isValid {
+				utils.DangerF("Invalid base url. Given: %s", baseUrl)
+				os.Exit(1)
+			}
 		}
+
+		if projectId == EMPTY_STR {
+			projectId = viper.GetString("defaultprojectid")
+		}
+
+		config.WriteConfigToFile(baseUrl, projectId)
 	},
 }
 
 var lsCmd = &cobra.Command{
 	Use:   "ls",
 	Short: "List all config values",
-	Long: ``,
+	Long:  ``,
 	PreRun: func(cmd *cobra.Command, args []string) {
 		config.InitConfig()
 	},
@@ -65,6 +73,6 @@ func init() {
 	configCmd.AddCommand(setSubCmd)
 	configCmd.AddCommand(lsCmd)
 
-	setSubCmd.Flags().StringP("baseUrl", "u", "", "Testra API base url")
-	setSubCmd.MarkFlagRequired("baseUrl")
+	setSubCmd.Flags().StringP("baseUrl", "u", EMPTY_STR, "Testra API base url")
+	setSubCmd.Flags().StringP(PROJECT_ID_FLAG_NAME, "p", EMPTY_STR, "Testra project Id")
 }

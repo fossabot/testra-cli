@@ -56,7 +56,7 @@ func ListProjects() {
 	resp, err := api.TestraClient().Project.GetProjects(nil)
 	checkErr(err)
 
-	if len(resp.Payload) == 0 {
+	if len(resp.Payload) == ZERO {
 		utils.Info("No projects found")
 		return
 	}

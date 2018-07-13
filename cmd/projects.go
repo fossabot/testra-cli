@@ -14,9 +14,9 @@ import (
 
 // projectsCmd represents the projects command
 var projectsCmd = &cobra.Command{
-	Use: "projects",
-	Short: "Manage projects in Testra",
-	Long: ``,
+	Use:                    "projects",
+	Short:                  "Manage projects in Testra",
+	Long:                   ``,
 	BashCompletionFunction: "projects",
 	Args: func(cmd *cobra.Command, args []string) error {
 		if len(args) < 1 {
@@ -38,7 +38,7 @@ var createProjectCmd = &cobra.Command{
 		config.InitConfig()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		isInteractive, _ := cmd.Flags().GetBool("interactive")
+		isInteractive, _ := cmd.Flags().GetBool(INTERACTIVE_FLAG_NAME)
 
 		var name string
 		var description string
@@ -73,7 +73,7 @@ var updateProjectCmd = &cobra.Command{
 		config.InitConfig()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		isInteractive, _ := cmd.Flags().GetBool("interactive")
+		isInteractive, _ := cmd.Flags().GetBool(INTERACTIVE_FLAG_NAME)
 
 		var projectId string
 		var name string
@@ -157,21 +157,21 @@ func init() {
 	projectsCmd.AddCommand(listProjectsCmd)
 
 	// Flags for createProjectCmd
-	createProjectCmd.Flags().StringP("name", "n", "", "Project name")
-	createProjectCmd.Flags().StringP("description", "d", "", "Project description")
-	createProjectCmd.Flags().BoolP("interactive", "i", false, "Interactive mode")
-	
+	createProjectCmd.Flags().StringP("name", "n", EMPTY_STR, "Project name")
+	createProjectCmd.Flags().StringP("description", "d", EMPTY_STR, "Project description")
+	createProjectCmd.Flags().BoolP(INTERACTIVE_FLAG_NAME, "i", false, "Interactive mode")
+
 	// Flags for createProjectCmd
-	updateProjectCmd.Flags().String("id", "", "Project id")
-	updateProjectCmd.Flags().StringP("name", "n", "", "Project name")
-	updateProjectCmd.Flags().StringP("description", "d", "", "Project description")
-	updateProjectCmd.Flags().BoolP("interactive", "i", false, "Interactive mode")
+	updateProjectCmd.Flags().StringP(PROJECT_ID_FLAG_NAME, "p", EMPTY_STR, "Project id")
+	updateProjectCmd.Flags().StringP("name", "n", EMPTY_STR, "Project name")
+	updateProjectCmd.Flags().StringP("description", "d", EMPTY_STR, "Project description")
+	updateProjectCmd.Flags().BoolP(INTERACTIVE_FLAG_NAME, "i", false, "Interactive mode")
 
 	// Flags for removeProjectCmd
-	removeProjectCmd.Flags().String("id", "", "Project id")
-	removeProjectCmd.MarkFlagRequired("id")
+	removeProjectCmd.Flags().StringP(PROJECT_ID_FLAG_NAME, "p", EMPTY_STR, "Project id")
+	removeProjectCmd.MarkFlagRequired(PROJECT_ID_FLAG_NAME)
 
 	// Flags for showProjectCmd
-	showProjectCmd.Flags().String("id", "", "Project id")
-	showProjectCmd.MarkFlagRequired("id")
+	showProjectCmd.Flags().StringP(PROJECT_ID_FLAG_NAME, "p", EMPTY_STR, "Project id")
+	showProjectCmd.MarkFlagRequired(PROJECT_ID_FLAG_NAME)
 }

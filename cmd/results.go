@@ -25,14 +25,14 @@ var resultsCmd = &cobra.Command{
 }
 
 var resultsListCmd = &cobra.Command{
-	Use: "ls",
+	Use:   "ls",
 	Short: "lists test results",
 	PreRun: func(cmd *cobra.Command, args []string) {
 		config.InitConfig()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		projectId, _ := cmd.Flags().GetString("projectId")
-		executionId, _ := cmd.Flags().GetString("executionId")
+		projectId := GetResolvedProjectId(cmd)
+		executionId, _ := cmd.Flags().GetString(EXECUTION_ID_FLAG_NAME)
 		status, _ := cmd.Flags().GetString("status")
 
 		handlers.ListResults(projectId, executionId, status)
@@ -44,10 +44,11 @@ func init() {
 
 	resultsCmd.AddCommand(resultsListCmd)
 
-	resultsListCmd.Flags().String("projectId", "", "Project Id")
-	resultsListCmd.Flags().String("executionId", "", "Execution Id")
-	resultsListCmd.Flags().StringP("status", "s", "", "Filter only failed results")
-
-	resultsListCmd.MarkFlagRequired("projectId")
-	resultsListCmd.MarkFlagRequired("executionId")
+	resultsListCmd.Flags().
+		StringP(PROJECT_ID_FLAG_NAME, "p", EMPTY_STR, "Project Id")
+	resultsListCmd.Flags().
+		StringP(EXECUTION_ID_FLAG_NAME, "e", EMPTY_STR, "Execution Id")
+	resultsListCmd.Flags().
+		StringP("status", "s", EMPTY_STR, "Filter results on status. [passed, failed, skipped, pending, ambiguous, undefined ]")
+	resultsListCmd.MarkFlagRequired(EXECUTION_ID_FLAG_NAME)
 }

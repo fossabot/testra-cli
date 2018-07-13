@@ -1,5 +1,6 @@
 package handlers
 
 const (
-	DateTimeFormat = "_2 Jan 2006 15:04:05"
+	DATE_TIME_FORMAT = "_2 Jan 2006 15:04:05"
+	ZERO             = 0
 )

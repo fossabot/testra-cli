@@ -11,9 +11,9 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-	"github.com/ttacon/chalk"
 	"github.com/testra-tech/testra-cli/api"
 	"github.com/testra-tech/testra-cli/api/client/project"
+	"github.com/testra-tech/testra-cli/internal/colors"
 )
 
 var ExecutionHeaders = []string{"Id", "Start Time", "End Time", "Environment", "Branch", "Tags"}
@@ -64,7 +64,7 @@ func GetExecution(projectId string, id string) {
 	var endTime string = ""
 
 	if resp.Payload.EndTime != nil {
-		endTime = time.Unix(*resp.Payload.StartTime/1000, 0).Format(DateTimeFormat)
+		endTime = time.Unix(*resp.Payload.EndTime/1000, ZERO).Format(DATE_TIME_FORMAT)
 	}
 
 	projResp, pErr := api.TestraClient().Project.GetProject(project.NewGetProjectParams().WithID(projectId))
@@ -72,8 +72,8 @@ func GetExecution(projectId string, id string) {
 	utils.DumpStruct(TestExecution{
 		*projResp.Payload.Name,
 		resp.Payload.Description,
-		resp.Payload.IsParallel,
-		time.Unix(*resp.Payload.StartTime/1000, 0).Format(DateTimeFormat),
+		resp.Payload.Parallel,
+		time.Unix(*resp.Payload.StartTime/1000, ZERO).Format(DATE_TIME_FORMAT),
 		endTime,
 		*resp.Payload.Environment,
 		*resp.Payload.Branch,
@@ -87,7 +87,7 @@ func ListExecutions(projectId string) {
 	resp, err := api.TestraClient().Execution.GetExecutions(execution.NewGetExecutionsParams().WithProjectID(projectId))
 	checkErr(err)
 
-	if len(resp.Payload) == 0 {
+	if len(resp.Payload) == ZERO {
 		utils.InfoF("No Executions found for project %s", projectId)
 		return
 	}
@@ -97,12 +97,12 @@ func ListExecutions(projectId string) {
 	for _, execution := range resp.Payload {
 		var endTime string = ""
 		if execution.EndTime != nil {
-			endTime = time.Unix(*execution.EndTime/1000, 0).Format(DateTimeFormat)
+			endTime = time.Unix(*execution.EndTime/1000, ZERO).Format(DATE_TIME_FORMAT)
 		}
 
 		rows = append(rows, []string{
 			*execution.ID,
-			time.Unix(*execution.StartTime/1000, 0).Format(DateTimeFormat),
+			time.Unix(*execution.StartTime/1000, ZERO).Format(DATE_TIME_FORMAT),
 			endTime,
 			*execution.Environment,
 			*execution.Branch,
@@ -125,14 +125,10 @@ type stats struct {
 var statsFmt = "%s Total: %d%s, %sPassed: %d (%.2f%%)%s, %sFailed: %d (%.2f%%)%s, %sOthers: %d (%.2f%%)%s\n\n" // \n is **important
 
 func ExecutionResultStats(projectId string, execId string, watchMode bool) {
-	var cyanStyle = chalk.Cyan.NewStyle()
-	var greenStyle = chalk.Green.NewStyle()
-	var redStyle = chalk.Red.NewStyle()
-	var yellowStyle = chalk.Yellow.NewStyle()
 
 	if watchMode {
 
-		fmt.Println(chalk.Blue, "\n WATCH Mode: Results will auto update every 30 secs. Ctrl+C to quit", chalk.Reset)
+		fmt.Println(colors.BLUE, "\n WATCH Mode: Results will auto update every 30 secs. Ctrl+C to quit", colors.RESET)
 
 		GetExecution(projectId, execId)
 
@@ -153,10 +149,10 @@ func ExecutionResultStats(projectId string, execId string, watchMode bool) {
 			s := getResultStats(projectId, execId)
 
 			fmt.Fprintf(writer, statsFmt,
-				cyanStyle, s.total, chalk.Reset,
-				greenStyle, s.passed, s.passPercent, chalk.Reset,
-				redStyle, s.failed, s.failPercent, chalk.Reset,
-				yellowStyle, s.others, s.otherPercent, chalk.Reset)
+				colors.CYAN, s.total, colors.RESET,
+				colors.GREEN, s.passed, s.passPercent, colors.RESET,
+				colors.RED, s.failed, s.failPercent, colors.RESET,
+				colors.YELLOW, s.others, s.otherPercent, colors.RESET)
 
 			time.Sleep(time.Second * 30)
 		}
@@ -164,15 +160,15 @@ func ExecutionResultStats(projectId string, execId string, watchMode bool) {
 		s := getResultStats(projectId, execId)
 		GetExecution(projectId, execId)
 		fmt.Printf(statsFmt,
-			cyanStyle, s.total, chalk.Reset,
-			greenStyle, s.passed, s.passPercent, chalk.Reset,
-			redStyle, s.failed, s.failPercent, chalk.Reset,
-			yellowStyle, s.others, s.otherPercent, chalk.Reset)
+			colors.CYAN, s.total, colors.RESET,
+			colors.GREEN, s.passed, s.passPercent, colors.RESET,
+			colors.RED, s.failed, s.failPercent, colors.RESET,
+			colors.YELLOW, s.others, s.otherPercent, colors.RESET)
 	}
 }
 
 func stopWriter(writer *uilive.Writer) {
-	fmt.Print(chalk.Dim, " Signal received. Quitting...", chalk.Reset)
+	fmt.Print(" Signal received. Quitting...")
 	writer.Stop()
 }
 
@@ -187,11 +183,11 @@ func getResultStats(projectId string, execId string) stats {
 	failed := resp.Payload.FailedResults
 	others := resp.Payload.OtherResults
 	total := passed + failed + others
-	var passPercent = float32(0)
-	var failPercent = float32(0)
-	var otherPercent = float32(0)
+	var passPercent = float32(ZERO)
+	var failPercent = float32(ZERO)
+	var otherPercent = float32(ZERO)
 
-	if total != 0 {
+	if total != ZERO {
 		passPercent = float32(passed) / float32(total) * 100
 		failPercent = float32(failed) / float32(total) * 100
 		otherPercent = float32(others) / float32(total) * 100

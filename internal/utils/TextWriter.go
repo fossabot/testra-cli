@@ -3,9 +3,9 @@ package utils
 import (
 	"fmt"
 	"gopkg.in/kyokomi/emoji.v1"
-	//"github.com/mgutz/ansi"
-	"github.com/ttacon/chalk"
+
 	"github.com/sanity-io/litter"
+	"github.com/testra-tech/testra-cli/internal/colors"
 )
 
 var successCheckEmoji = emoji.Sprint(":white_check_mark: ")
@@ -13,32 +13,28 @@ var infoEmoji = emoji.Sprint(":information_source: ")
 var warnEmoji = emoji.Sprint(":warning:")
 var dangerEmoji = emoji.Sprint(":no_entry_sign:")
 
-var greenStyle = chalk.Green.NewStyle()
-var redStyle = chalk.Red.NewStyle()
-var yellowStyle = chalk.Yellow.NewStyle()
-
 func Info(txt string) {
-	wrapWithNewLines(func() { fmt.Println(infoEmoji, chalk.Green, txt, chalk.Reset) })
+	wrapWithNewLines(func() { fmt.Println(infoEmoji, colors.GREEN, txt, colors.RESET) })
 }
 
 func InfoF(txt string, a ...interface{}) {
-	wrapWithNewLines(func() { fmt.Printf(infoEmoji+"%s"+txt+"%s", greenStyle, a, chalk.Reset) })
+	wrapWithNewLines(func() { fmt.Printf(infoEmoji+"%s"+txt+"%s", colors.GREEN, a, colors.RESET) })
 }
 
 func Warn(txt string) {
-	wrapWithNewLines(func() { fmt.Println(warnEmoji, chalk.Yellow, txt, chalk.Reset) })
+	wrapWithNewLines(func() { fmt.Println(warnEmoji, colors.YELLOW, txt, colors.RESET) })
 }
 
 func WarnF(txt string, a ...interface{}) {
-	wrapWithNewLines(func() { fmt.Printf(warnEmoji+"%s"+txt+"%s", yellowStyle, a, chalk.Reset) })
+	wrapWithNewLines(func() { fmt.Printf(warnEmoji+"%s"+txt+"%s", colors.YELLOW, a, colors.RESET) })
 }
 
 func Danger(txt string) {
-	wrapWithNewLines(func() { fmt.Println(dangerEmoji, chalk.Red, txt, chalk.Reset) })
+	wrapWithNewLines(func() { fmt.Println(dangerEmoji, colors.RED, txt, colors.RESET) })
 }
 
 func DangerF(txt string, a ...interface{}) {
-	wrapWithNewLines(func() { fmt.Printf(dangerEmoji+"%s"+txt+"%s", redStyle, a, chalk.Reset) })
+	wrapWithNewLines(func() { fmt.Printf(dangerEmoji+"%s"+txt+"%s", colors.YELLOW, a, colors.RESET) })
 }
 
 func Success(txt string) {
@@ -56,7 +52,7 @@ func wrapWithNewLines(fn func()) {
 }
 
 func DumpStruct(a interface{}) {
-	fmt.Print("\n", chalk.Bold, chalk.Magenta)
+	fmt.Print("\n", colors.MAGENTA)
 	litter.Dump(a)
 	fmt.Print("\n")
 }

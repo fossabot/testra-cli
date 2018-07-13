@@ -66,17 +66,21 @@ func IsValidBaseUrl(url string) (bool, []string) {
 
 func HandleConfig() {
 	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("\nTestra API Base Url : ")
-	readLine, _ := reader.ReadString('\n')
-	baseUrl := strings.TrimSuffix(readLine, "\n")
 
-	WriteConfigToFile(baseUrl)
+	fmt.Print(NewLine + "Testra API Base Url : ")
+	readLine, _ := reader.ReadString('\n')
+	baseUrl := strings.TrimSuffix(readLine, NewLine)
+
+	fmt.Print(NewLine + "Default Project Id : ")
+	readLine, _ = reader.ReadString('\n')
+	projectId := strings.TrimSuffix(readLine, NewLine)
+
+	WriteConfigToFile(baseUrl, projectId)
 }
 
-func WriteConfigToFile(baseUrl string) {
-	config := &Config{baseUrl, ""}
+func WriteConfigToFile(baseUrl string, defaultProjectId string) {
+	config := &Config{baseUrl, defaultProjectId}
 	json, _ := json.Marshal(*config)
-	fmt.Println(string(json))
 	f, _ := os.Create(configFileAbsolutePath)
 	defer f.Close()
 	f.Write(json)
@@ -111,5 +115,5 @@ func initLitterConfig() {
 	litter.Config.StripPackageNames = true
 
 	// Sets separator used when multiple arguments are passed to Dump() or Sdump().
-	litter.Config.Separator = "\n"
+	litter.Config.Separator = NewLine
 }

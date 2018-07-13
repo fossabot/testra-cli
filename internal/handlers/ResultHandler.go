@@ -4,28 +4,20 @@ import (
 	"github.com/testra-tech/testra-cli/api"
 	"github.com/testra-tech/testra-cli/api/client/result"
 
-	"github.com/ttacon/chalk"
 	"fmt"
-	"os/exec"
 	"log"
 	"bytes"
 	"strings"
 	"os"
 	"github.com/testra-tech/testra-cli/internal/utils"
 	"github.com/testra-tech/testra-cli/api/models"
+	"github.com/testra-tech/testra-cli/internal/colors"
+	"os/exec"
 )
 
 const (
 	DoubleSpaces = " "
 )
-
-var greenStyle = chalk.Green.NewStyle()
-var redStyle = chalk.Red.NewStyle()
-var yellowStyle = chalk.Yellow.NewStyle()
-
-/*func UpdateResult(id string, result models.TestResult) {
-
-}*/
 
 func ListResults(projectId string, execId string, status string) {
 	utils.StartSpin()
@@ -36,7 +28,7 @@ func ListResults(projectId string, execId string, status string) {
 			GetResults(result.NewGetResultsParams().
 			WithProjectID(projectId).
 			WithExecutionID(execId).
-			WithResult(&statusInUpper))
+			WithStatus(&statusInUpper))
 	checkErr(err)
 
 	var buffer bytes.Buffer
@@ -44,7 +36,7 @@ func ListResults(projectId string, execId string, status string) {
 	for _, result := range resp.Payload {
 		buffer.WriteString("\n")
 
-		fmt.Fprintln(&buffer, chalk.Cyan, "Scenario: ", *result.Scenario.Name, chalk.Reset)
+		fmt.Fprintln(&buffer, colors.CYAN, "Scenario: ", *result.Scenario.Name, colors.RESET)
 
 		allSteps := append(result.Scenario.BackgroundSteps, result.Scenario.Steps...)
 
@@ -58,11 +50,12 @@ func ListResults(projectId string, execId string, status string) {
 
 			switch *resultStatus {
 			case "PASSED":
-				fmt.Fprintln(&buffer, DoubleSpaces, chalk.Green, *step.Text, chalk.Reset)
+				fmt.Fprintln(&buffer, DoubleSpaces, colors.GREEN, *step.Text, colors.RESET)
 			case "FAILED":
-				fmt.Fprintln(&buffer, DoubleSpaces, chalk.Red, *step.Text, chalk.Reset)
+				fmt.Fprintln(&buffer, DoubleSpaces, colors.RED, *step.Text, colors.RESET)
+				fmt.Fprintln(&buffer, DoubleSpaces, "\t" + result.Error)
 			default:
-				fmt.Fprintln(&buffer, DoubleSpaces, chalk.Yellow, *step.Text, chalk.Reset)
+				fmt.Fprintln(&buffer, DoubleSpaces, colors.YELLOW, *step.Text, colors.YELLOW)
 			}
 		}
 	}
@@ -74,7 +67,7 @@ func ListResults(projectId string, execId string, status string) {
 func getStepResult(index *int64, result *models.EnrichedTestResult) (*string, error) {
 	for _, stepResult := range result.StepResults {
 		if *stepResult.Index == *index {
-			return stepResult.Result, nil
+			return stepResult.Status, nil
 		}
 	}
 	return nil, fmt.Errorf("Step result not found")
@@ -82,7 +75,7 @@ func getStepResult(index *int64, result *models.EnrichedTestResult) (*string, er
 
 func lessIt(s string) {
 	// Could read $PAGER rather than hardcoding the path.less
-	cmd := exec.Command("/usr/bin/less")
+	cmd := exec.Command("/usr/bin/less", []string{"-R"}...)
 
 	// Feed it with the string you want to display.
 	cmd.Stdin = strings.NewReader(s)
