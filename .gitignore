@@ -20,5 +20,7 @@
 
 # Auto generated sources and dependencies
 vendor
-api/client
-api/models
+
+# Binary packages and temp binary
+dist
+testra

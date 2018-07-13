@@ -1,12 +1,28 @@
 language: go
 
-sudo: false
-env:
-go:
-  - 1.10
+#addons:
+#  apt:
+#    packages:
+#    # needed for the nfpm pipe:
+#    - rpm
+#    # needed for the snap pipe:
+#    - snapd
 
-script:
-  - mkdir api & sh scripts/generate-testra-api-client.sh
-  - dep ensure
-  - go test -v
-  - go build -ldflags="-w -s" -o dist/testra
+env:
+# needed for the snap pipe:
+- PATH=/snap/bin:$PATH GITHUB_TOKEN=$GITHUB_TOKEN
+
+after_success:
+- test -n "$TRAVIS_TAG"
+
+# calls goreleaser
+deploy:
+- provider: script
+  skip_cleanup: true
+  script:
+    - go get github.com/inconshreveable/mousetrap
+    - go get github.com/mattn/go-isatty
+    - curl -sL https://git.io/goreleaser | bash
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = linux
