@@ -20,9 +20,7 @@ deploy:
 - provider: script
   skip_cleanup: true
   script:
-    - go get github.com/inconshreveable/mousetrap
-    - go get github.com/mattn/go-isatty
-    - curl -sL https://git.io/goreleaser | bash
+    - go get github.com/inconshreveable/mousetrap && go get github.com/mattn/go-isatty && curl -sL https://git.io/goreleaser | bash
   on:
     tags: true
     condition: $TRAVIS_OS_NAME = linux
