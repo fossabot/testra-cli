@@ -113,16 +113,17 @@ func ListExecutions(projectId string) {
 }
 
 type stats struct {
-	total        int64
-	passed       int64
-	passPercent  float32
-	failed       int64
-	failPercent  float32
-	others       int64
-	otherPercent float32
+	total            int64
+	passed           int64
+	passPercent      float32
+	failed           int64
+	failPercent      float32
+	expectedFailures int64
+	others           int64
+	otherPercent     float32
 }
 
-var statsFmt = "%s Total: %d%s, %sPassed: %d (%.2f%%)%s, %sFailed: %d (%.2f%%)%s, %sOthers: %d (%.2f%%)%s\n\n" // \n is **important
+var statsFmt = "%s Total: %d%s, %sPassed: %d (%.2f%%)%s, %sFailed: %d (%.2f%%)%s, %s Expected Failures: %d%s, %sOthers: %d (%.2f%%)%s\n\n" // \n is **important
 
 func ExecutionResultStats(projectId string, execId string, watchMode bool) {
 
@@ -152,6 +153,7 @@ func ExecutionResultStats(projectId string, execId string, watchMode bool) {
 				colors.CYAN, s.total, colors.RESET,
 				colors.GREEN, s.passed, s.passPercent, colors.RESET,
 				colors.RED, s.failed, s.failPercent, colors.RESET,
+				colors.LIGHT_RED, s.expectedFailures, colors.RESET,
 				colors.YELLOW, s.others, s.otherPercent, colors.RESET)
 
 			time.Sleep(time.Second * 30)
@@ -163,6 +165,7 @@ func ExecutionResultStats(projectId string, execId string, watchMode bool) {
 			colors.CYAN, s.total, colors.RESET,
 			colors.GREEN, s.passed, s.passPercent, colors.RESET,
 			colors.RED, s.failed, s.failPercent, colors.RESET,
+			colors.LIGHT_RED, s.expectedFailures, colors.RESET,
 			colors.YELLOW, s.others, s.otherPercent, colors.RESET)
 	}
 }
@@ -179,9 +182,10 @@ func getResultStats(projectId string, execId string) stats {
 		WithID(execId))
 	checkErr(err)
 
-	passed := resp.Payload.PassedResults
-	failed := resp.Payload.FailedResults
-	others := resp.Payload.OtherResults
+	passed := resp.Payload.Passed
+	failed := resp.Payload.Failed
+	expectedFailures := resp.Payload.ExpectedFailures
+	others := resp.Payload.Others
 	total := passed + failed + others
 	var passPercent = float32(ZERO)
 	var failPercent = float32(ZERO)
@@ -199,6 +203,7 @@ func getResultStats(projectId string, execId string) stats {
 		passPercent,
 		failed,
 		failPercent,
+		expectedFailures,
 		others,
 		otherPercent,
 	}

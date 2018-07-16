@@ -18,17 +18,20 @@ type TestExecutionStats struct {
 	// execution Id
 	ExecutionID string `json:"executionId,omitempty"`
 
-	// failed results
-	FailedResults int64 `json:"failedResults,omitempty"`
+	// expected failures
+	ExpectedFailures int64 `json:"expectedFailures,omitempty"`
+
+	// failed
+	Failed int64 `json:"failed,omitempty"`
 
 	// id
 	ID string `json:"id,omitempty"`
 
-	// other results
-	OtherResults int64 `json:"otherResults,omitempty"`
+	// others
+	Others int64 `json:"others,omitempty"`
 
-	// passed results
-	PassedResults int64 `json:"passedResults,omitempty"`
+	// passed
+	Passed int64 `json:"passed,omitempty"`
 
 	// project Id
 	ProjectID string `json:"projectId,omitempty"`

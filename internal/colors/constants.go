@@ -7,5 +7,7 @@ const (
 	BLUE ="\033[34m"
 	MAGENTA ="\033[35m"
 	CYAN ="\033[36m"
+
+	LIGHT_RED ="\033[91m"
 	RESET ="\033[m"
 )
