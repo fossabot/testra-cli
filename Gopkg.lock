@@ -182,6 +182,12 @@
   version = "v1.2.0"
 
 [[projects]]
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
+
+[[projects]]
   name = "github.com/sanity-io/litter"
   packages = ["."]
   revision = "ae543b7ba8fd6af63e4976198f146e1348ae53c1"
@@ -288,6 +294,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "84abf74fc70b08fbb5a7569d9dba7ee133bee860c3a9673d528317399e268baa"
+  inputs-digest = "3a47e659047c4a6027caee6f8b4f56fe2ade868f063a5e8a889464531334939f"
   solver-name = "gps-cdcl"
   solver-version = 1

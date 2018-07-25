@@ -4,14 +4,13 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/testra-tech/testra-cli/api/client"
 
-	apiClient "github.com/testra-tech/testra-cli/api/client"
 	httpTransport "github.com/go-openapi/runtime/client"
 	"github.com/spf13/viper"
+	apiClient "github.com/testra-tech/testra-cli/api/client"
 )
 
-func TestraClient() *client.Testra {
+func NewTestraClient() *client.Testra {
 
-	// create the transport
 	transport := httpTransport.New(
 		viper.GetString("domain"), apiClient.DefaultBasePath, []string{viper.GetString("scheme")})
 

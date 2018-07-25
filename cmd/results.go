@@ -3,10 +3,10 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/spf13/cobra"
 	"errors"
-	"github.com/testra-tech/testra-cli/internal/handlers"
+	"github.com/spf13/cobra"
 	"github.com/testra-tech/testra-cli/internal/config"
+	"github.com/testra-tech/testra-cli/internal/result"
 )
 
 // resultsCmd represents the results command
@@ -31,11 +31,7 @@ var resultsListCmd = &cobra.Command{
 		config.InitConfig()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		projectId := GetResolvedProjectId(cmd)
-		executionId, _ := cmd.Flags().GetString(EXECUTION_ID_FLAG_NAME)
-		status, _ := cmd.Flags().GetString("status")
-
-		handlers.ListResults(projectId, executionId, status)
+		result.HandleList(cmd)
 	},
 }
 

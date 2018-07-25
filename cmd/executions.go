@@ -3,17 +3,12 @@ package cmd
 import (
 	"fmt"
 
+		"errors"
 	"github.com/spf13/cobra"
-	"errors"
 	"github.com/spf13/viper"
-	"github.com/testra-tech/testra-cli/internal/handlers"
 	"github.com/testra-tech/testra-cli/internal/config"
-	"bufio"
-	"os"
-	"strings"
-	"github.com/testra-tech/testra-cli/api/models"
-	"strconv"
-)
+	"github.com/testra-tech/testra-cli/internal/execution"
+			)
 
 // executionsCmd represents the executions command
 var executionsCmd = &cobra.Command{
@@ -45,81 +40,10 @@ var createExecutionCmd = &cobra.Command{
 		config.InitConfig()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		isInteractive, _ := cmd.Flags().GetBool(INTERACTIVE_FLAG_NAME)
-
-		var projectId string
-		var description string
-		var isParallel bool
-		var host string
-		var environment string
-		var branch string
-		var tags string
-		var buildRef string
-
-		if isInteractive {
-			var readLine string
-			fmt.Println()
-			reader := bufio.NewReader(os.Stdin)
-
-			fmt.Print("Project Id : ")
-			readLine, _ = reader.ReadString('\n')
-			projectId = strings.TrimSuffix(readLine, "\n")
-
-			fmt.Print("Execution Description : ")
-			readLine, _ = reader.ReadString('\n')
-			description = strings.TrimSuffix(readLine, "\n")
-
-			fmt.Print("Is Parallel execution? (true/false) : ")
-			readLine, _ = reader.ReadString('\n')
-			isParallel, _ = strconv.ParseBool(strings.TrimSuffix(readLine, "\n"))
-
-			fmt.Print("Environment : ")
-			readLine, _ = reader.ReadString('\n')
-			environment = strings.TrimSuffix(readLine, "\n")
-
-			fmt.Print("Branch : ")
-			readLine, _ = reader.ReadString('\n')
-			branch = strings.TrimSuffix(readLine, "\n")
-
-			fmt.Print("Tags : ")
-			readLine, _ = reader.ReadString('\n')
-			tags = strings.TrimSuffix(readLine, "\n")
-
-			fmt.Print("Host : ")
-			readLine, _ = reader.ReadString('\n')
-			host = strings.TrimSuffix(readLine, "\n")
-
-			fmt.Print("Build Reference : ")
-			readLine, _ = reader.ReadString('\n')
-			buildRef = strings.TrimSuffix(readLine, "\n")
-
-		} else {
-			projectId = GetResolvedProjectId(cmd)
-			description, _ = cmd.Flags().GetString("description")
-			isParallel, _ = cmd.Flags().GetBool("parallel")
-			host, _ = cmd.Flags().GetString("host")
-			environment, _ = cmd.Flags().GetString("env")
-			branch, _ = cmd.Flags().GetString("branch")
-			tags, _ = cmd.Flags().GetString("tags")
-			buildRef, _ = cmd.Flags().GetString("buildRef")
-		}
-
-		executionRequest := models.ExecutionRequest{
-			branch,
-			buildRef,
-			description,
-			0,
-			environment,
-			&host,
-			&isParallel,
-			strings.Split(tags, ","),
-		}
-
-		handlers.CreateExecution(projectId, &executionRequest, isInteractive)
+		execution.HandleCreateExecution(cmd)
 	},
 }
 
-// removeExecutionCmd represents the remove sub command
 var removeExecutionCmd = &cobra.Command{
 	Use:   "remove",
 	Short: "Removes existing test execution",
@@ -128,13 +52,10 @@ var removeExecutionCmd = &cobra.Command{
 		config.InitConfig()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		projectId := GetResolvedProjectId(cmd)
-		executionId, _ := cmd.Flags().GetString(EXECUTION_ID_FLAG_NAME)
-		handlers.DeleteExecution(projectId, executionId)
+		execution.HandleDeleteExecution(cmd)
 	},
 }
 
-// showExecutionCmd represents the show sub command
 var showExecutionCmd = &cobra.Command{
 	Use:   "show",
 	Short: "Displays a single execution info for the give execution id",
@@ -143,13 +64,10 @@ var showExecutionCmd = &cobra.Command{
 		config.InitConfig()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		projectId := GetResolvedProjectId(cmd)
-		executionId, _ := cmd.Flags().GetString(EXECUTION_ID_FLAG_NAME)
-		handlers.GetExecution(projectId, executionId)
+		execution.HandleGetExecution(cmd)
 	},
 }
 
-// showExecutionCmd represents the show sub command
 var resultStatsCmd = &cobra.Command{
 	Use:   "stats",
 	Short: "Displays a single execution info for the give execution id",
@@ -158,15 +76,10 @@ var resultStatsCmd = &cobra.Command{
 		config.InitConfig()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		projectId := GetResolvedProjectId(cmd)
-		executionId, _ := cmd.Flags().GetString(EXECUTION_ID_FLAG_NAME)
-
-		watchMode, _ := cmd.Flags().GetBool("watch")
-		handlers.ExecutionResultStats(projectId, executionId, watchMode)
+		execution.HandleExecutionStats(cmd)
 	},
 }
 
-// listExecutionsCmd represents the ls sub command
 var listExecutionsCmd = &cobra.Command{
 	Use:   "ls",
 	Short: "Lists all the executions",
@@ -175,9 +88,7 @@ var listExecutionsCmd = &cobra.Command{
 		config.InitConfig()
 	},
 	Run: func(cmd *cobra.Command, args []string) {
-		projectId := GetResolvedProjectId(cmd)
-
-		handlers.ListExecutions(projectId)
+		execution.HandleListExecutions(cmd)
 	},
 }
 
