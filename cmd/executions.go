@@ -93,7 +93,7 @@ var listExecutionsCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(executionsCmd)
+	RootCmd.AddCommand(executionsCmd)
 
 	executionsCmd.AddCommand(createExecutionCmd)
 	executionsCmd.AddCommand(removeExecutionCmd)

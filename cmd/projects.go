@@ -73,8 +73,8 @@ var removeProjectCmd = &cobra.Command{
 	},
 }
 
-// showProjectCmd represents the show sub command
-var showProjectCmd = &cobra.Command{
+// ShowProjectCmd represents the show sub command
+var ShowProjectCmd = &cobra.Command{
 	Use:   "show",
 	Short: "Displays a single project info for the give project id",
 	Long:  ``,
@@ -100,13 +100,13 @@ var listProjectsCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(projectsCmd)
+	RootCmd.AddCommand(projectsCmd)
 
 	// Sub commands in projects
 	projectsCmd.AddCommand(createProjectCmd)
 	projectsCmd.AddCommand(updateProjectCmd)
 	projectsCmd.AddCommand(removeProjectCmd)
-	projectsCmd.AddCommand(showProjectCmd)
+	projectsCmd.AddCommand(ShowProjectCmd)
 	projectsCmd.AddCommand(listProjectsCmd)
 
 	// Flags for createProjectCmd
@@ -124,7 +124,7 @@ func init() {
 	removeProjectCmd.Flags().StringP(PROJECT_ID_FLAG_NAME, "p", EMPTY_STR, "Project id")
 	removeProjectCmd.MarkFlagRequired(PROJECT_ID_FLAG_NAME)
 
-	// Flags for showProjectCmd
-	showProjectCmd.Flags().StringP(PROJECT_ID_FLAG_NAME, "p", EMPTY_STR, "Project id")
-	showProjectCmd.MarkFlagRequired(PROJECT_ID_FLAG_NAME)
+	// Flags for ShowProjectCmd
+	ShowProjectCmd.Flags().StringP(PROJECT_ID_FLAG_NAME, "p", EMPTY_STR, "Project id")
+	ShowProjectCmd.MarkFlagRequired(PROJECT_ID_FLAG_NAME)
 }

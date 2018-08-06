@@ -148,6 +148,7 @@ func initLiveConsoleWriter() *uilive.Writer {
 		writer.Stop()
 	})
 	writer.Start()
+	writer.RefreshInterval = 1000
 	return writer
 }
 

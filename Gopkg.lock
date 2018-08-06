@@ -130,6 +130,12 @@
   version = "v1.0"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/kami-zh/go-capturer"
+  packages = ["."]
+  revision = "e492ea43421da7381e5200a2e22753bfc31347c2"
+
+[[projects]]
   name = "github.com/magiconair/properties"
   packages = ["."]
   revision = "c2353362d570a7bfa228149c62842019201cfb71"
@@ -271,6 +277,12 @@
   version = "v0.3.0"
 
 [[projects]]
+  branch = "v1"
+  name = "gopkg.in/jarcoal/httpmock.v1"
+  packages = ["."]
+  revision = "8007e27cdb3239fcfc95c1274d7d8cbcc68b7d52"
+
+[[projects]]
   name = "gopkg.in/kyokomi/emoji.v1"
   packages = ["."]
   revision = "2e9a9507333f3ee28f3fab88c2c3aba34455d734"
@@ -294,6 +306,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "3a47e659047c4a6027caee6f8b4f56fe2ade868f063a5e8a889464531334939f"
+  inputs-digest = "69afb9502f4b02180bc64da58e219ec9a815b2838aad5b5050b5066c5e0ad5e9"
   solver-name = "gps-cdcl"
   solver-version = 1

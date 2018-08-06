@@ -13,7 +13,7 @@ env:
 - PATH=/snap/bin:$PATH GITHUB_TOKEN=$GITHUB_TOKEN
 
 after_success:
-- test -n "$TRAVIS_TAG"
+- test tests/* -v -n "$TRAVIS_TAG"
 
 # calls goreleaser
 deploy:

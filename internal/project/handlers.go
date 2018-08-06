@@ -66,13 +66,14 @@ func HandleDelete(cmd *cobra.Command) {
 }
 
 func HandleGet(cmd *cobra.Command) {
-	resp, err := GetProject(getProjectIdFromCmdFlag(cmd))
+	projectIdFromCmdFlag := getProjectIdFromCmdFlag(cmd)
+	resp, err := GetProject(projectIdFromCmdFlag)
 	check.Err(err)
 	consolewriter.DumpStruct(*resp.Payload)
 }
 
 func getProjectIdFromCmdFlag(cmd *cobra.Command) string {
-	projectId, _ := cmd.Flags().GetString("id")
+	projectId, _ := cmd.Flags().GetString("projectId")
 	return projectId
 }
 
