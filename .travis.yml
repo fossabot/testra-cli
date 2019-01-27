@@ -12,13 +12,6 @@ git:
 notifications:
   email: false
 
-before_script:
-  - go install -mod vendor github.com/golangci/golangci-lint/cmd/golangci-lint
-
-script:
-  - golangci-lint run
-  - go test -v -race ./...
-
 after_success:
   - test -n "$TRAVIS_TAG"
 
