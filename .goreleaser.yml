@@ -56,8 +56,8 @@ brew:
     name: homebrew-tap
   commit_author:
     name: testra
-    email: testra2018@gmail.com
+    email: testra.oss@gmail.com
   folder: Formula
   homepage: "https://github.com/testra/testra-cli"
-  description: "a CLI for Testra"
+  description: "CLI tool for Testra"
   skip_upload: false
