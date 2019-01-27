@@ -1,7 +1,7 @@
 package check
 
 import (
-	"github.com/testra-tech/testra-cli/internal/constants/colors"
+	"github.com/testra/testra-cli/internal/constants/colors"
 	"log"
 )
 

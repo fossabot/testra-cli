@@ -1,7 +1,10 @@
 #!/bin/bash
 
-wget -O swagger.yaml https://raw.githubusercontent.com/testra-tech/testra-api/master/swagger.yaml
+wget -O swagger.yaml https://raw.githubusercontent.com/testra/testra-api/master/swagger.yaml
 
-swagger generate client -f swagger.yaml -A testra -t api
+# yarn global add yamljs (or) npm i -g yamljs
+yaml2json swagger.yaml -p -i4 > swagger.json
 
-rm -f swagger.yaml
+swagger generate client -f swagger.json -A testra -t api
+
+rm -f swagger.yaml swagger.json

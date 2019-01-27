@@ -5,8 +5,8 @@ import (
 
 		"errors"
 	"github.com/spf13/cobra"
-	"github.com/testra-tech/testra-cli/internal/config"
-	"github.com/testra-tech/testra-cli/internal/project"
+	"github.com/testra/testra-cli/internal/config"
+	"github.com/testra/testra-cli/internal/project"
 		)
 
 var projectsCmd = &cobra.Command{

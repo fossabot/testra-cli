@@ -3,7 +3,7 @@ package writer
 import (
 	//"github.com/apcera/termtables"
 	"github.com/olekukonko/tablewriter"
-	"github.com/testra-tech/testra-cli/internal/constants/strs"
+	"github.com/testra/testra-cli/internal/constants/strs"
 	"os"
 )
 

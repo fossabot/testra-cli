@@ -31,6 +31,9 @@ type Scenario struct {
 	// Required: true
 	Before []*TestStep `json:"before"`
 
+	// data rows
+	DataRows []*DataTableRow `json:"dataRows"`
+
 	// feature description
 	// Required: true
 	FeatureDescription *string `json:"featureDescription"`
@@ -49,6 +52,9 @@ type Scenario struct {
 	// name
 	// Required: true
 	Name *string `json:"name"`
+
+	// namespace
+	Namespace string `json:"namespace,omitempty"`
 
 	// project Id
 	// Required: true
@@ -76,6 +82,10 @@ func (m *Scenario) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := m.validateBefore(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateDataRows(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -178,6 +188,31 @@ func (m *Scenario) validateBefore(formats strfmt.Registry) error {
 			if err := m.Before[i].Validate(formats); err != nil {
 				if ve, ok := err.(*errors.Validation); ok {
 					return ve.ValidateName("before" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+func (m *Scenario) validateDataRows(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DataRows) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.DataRows); i++ {
+		if swag.IsZero(m.DataRows[i]) { // not required
+			continue
+		}
+
+		if m.DataRows[i] != nil {
+			if err := m.DataRows[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("dataRows" + "." + strconv.Itoa(i))
 				}
 				return err
 			}

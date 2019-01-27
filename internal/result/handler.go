@@ -2,14 +2,14 @@ package result
 
 import (
 	"bytes"
-	"github.com/testra-tech/testra-cli/api/models"
-	"github.com/testra-tech/testra-cli/internal/check"
-	"github.com/testra-tech/testra-cli/internal/utils/syscmd"
-	"github.com/testra-tech/testra-cli/api/client/result"
+	"github.com/testra/testra-cli/api/models"
+	"github.com/testra/testra-cli/internal/check"
+	"github.com/testra/testra-cli/internal/utils/syscmd"
+	"github.com/testra/testra-cli/api/client/result"
 	"github.com/spf13/cobra"
-	"github.com/testra-tech/testra-cli/internal/commons"
-	"github.com/testra-tech/testra-cli/internal/constants/flags"
-	"github.com/testra-tech/testra-cli/internal/utils/spinner"
+	"github.com/testra/testra-cli/internal/commons"
+	"github.com/testra/testra-cli/internal/constants/flags"
+	"github.com/testra/testra-cli/internal/utils/spinner"
 )
 
 func HandleList(cmd *cobra.Command) {

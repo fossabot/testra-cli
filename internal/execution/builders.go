@@ -1,7 +1,7 @@
 package execution
 
 import (
-	"github.com/testra-tech/testra-cli/api/models"
+	"github.com/testra/testra-cli/api/models"
 	"time"
 	"strings"
 )

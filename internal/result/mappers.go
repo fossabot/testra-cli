@@ -1,12 +1,12 @@
 package result
 
 import (
-	"github.com/testra-tech/testra-cli/api/models"
-	"github.com/testra-tech/testra-cli/internal/constants/strs"
+	"github.com/testra/testra-cli/api/models"
+	"github.com/testra/testra-cli/internal/constants/strs"
 	"bytes"
-	"github.com/testra-tech/testra-cli/internal/constants/colors"
+	"github.com/testra/testra-cli/internal/constants/colors"
 	"github.com/pkg/errors"
-	strUtils "github.com/testra-tech/testra-cli/internal/utils/strs"
+	strUtils "github.com/testra/testra-cli/internal/utils/strs"
 	"strings"
 )
 

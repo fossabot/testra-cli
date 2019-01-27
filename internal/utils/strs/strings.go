@@ -2,7 +2,7 @@ package strs
 
 import (
 	"strconv"
-	"github.com/testra-tech/testra-cli/internal/constants/colors"
+	"github.com/testra/testra-cli/internal/constants/colors"
 )
 
 func IntToStr(i int64) string {

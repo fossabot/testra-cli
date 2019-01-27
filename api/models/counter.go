@@ -21,6 +21,10 @@ type Counter struct {
 	// Required: true
 	ProjectsCount *int64 `json:"projectsCount"`
 
+	// simulations count
+	// Required: true
+	SimulationsCount *int64 `json:"simulationsCount"`
+
 	// test cases count
 	// Required: true
 	TestCasesCount *int64 `json:"testCasesCount"`
@@ -36,6 +40,10 @@ type Counter struct {
 	// test scenarios count
 	// Required: true
 	TestScenariosCount *int64 `json:"testScenariosCount"`
+
+	// vulnerability alerts count
+	// Required: true
+	VulnerabilityAlertsCount *int64 `json:"vulnerabilityAlertsCount"`
 }
 
 // Validate validates this counter
@@ -43,6 +51,10 @@ func (m *Counter) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateProjectsCount(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateSimulationsCount(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -62,6 +74,10 @@ func (m *Counter) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateVulnerabilityAlertsCount(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -71,6 +87,15 @@ func (m *Counter) Validate(formats strfmt.Registry) error {
 func (m *Counter) validateProjectsCount(formats strfmt.Registry) error {
 
 	if err := validate.Required("projectsCount", "body", m.ProjectsCount); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Counter) validateSimulationsCount(formats strfmt.Registry) error {
+
+	if err := validate.Required("simulationsCount", "body", m.SimulationsCount); err != nil {
 		return err
 	}
 
@@ -107,6 +132,15 @@ func (m *Counter) validateTestResultsCount(formats strfmt.Registry) error {
 func (m *Counter) validateTestScenariosCount(formats strfmt.Registry) error {
 
 	if err := validate.Required("testScenariosCount", "body", m.TestScenariosCount); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Counter) validateVulnerabilityAlertsCount(formats strfmt.Registry) error {
+
+	if err := validate.Required("vulnerabilityAlertsCount", "body", m.VulnerabilityAlertsCount); err != nil {
 		return err
 	}
 

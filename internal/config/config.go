@@ -3,12 +3,12 @@ package config
 import (
 	"github.com/sanity-io/litter"
 	"github.com/spf13/viper"
-	"github.com/testra-tech/testra-cli/internal/constants/colors"
-	"github.com/testra-tech/testra-cli/internal/constants/strs"
+	"github.com/testra/testra-cli/internal/constants/colors"
+	"github.com/testra/testra-cli/internal/constants/strs"
 		"log"
 	"os"
-	"github.com/testra-tech/testra-cli/internal/utils/urls"
-	"github.com/testra-tech/testra-cli/internal/utils/paths"
+	"github.com/testra/testra-cli/internal/utils/urls"
+	"github.com/testra/testra-cli/internal/utils/paths"
 )
 
 func InitConfig() {

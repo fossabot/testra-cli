@@ -1,11 +1,11 @@
 package project
 
 import (
-	"github.com/testra-tech/testra-cli/internal/check"
-	consolewriter "github.com/testra-tech/testra-cli/internal/utils/console/writer"
+	"github.com/testra/testra-cli/internal/check"
+	consolewriter "github.com/testra/testra-cli/internal/utils/console/writer"
 	"fmt"
 	"github.com/spf13/cobra"
-	"github.com/testra-tech/testra-cli/internal/utils/console/reader"
+	"github.com/testra/testra-cli/internal/utils/console/reader"
 )
 
 var projectHeaders = []string{"Id", "Name"}

@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/testra-tech/testra-cli/internal/constants/colors"
-	"github.com/testra-tech/testra-cli/internal/constants/flags"
+	"github.com/testra/testra-cli/internal/constants/colors"
+	"github.com/testra/testra-cli/internal/constants/flags"
 	"log"
-	consolereader "github.com/testra-tech/testra-cli/internal/utils/console/reader"
-	"github.com/testra-tech/testra-cli/internal/utils/urls"
+	consolereader "github.com/testra/testra-cli/internal/utils/console/reader"
+	"github.com/testra/testra-cli/internal/utils/urls"
 )
 
 func HandleCreate() {

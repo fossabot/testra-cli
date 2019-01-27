@@ -1,10 +1,10 @@
 package execution
 
 import (
-	"github.com/testra-tech/testra-cli/internal/project"
-	"github.com/testra-tech/testra-cli/internal/utils/datetime"
+	"github.com/testra/testra-cli/internal/project"
+	"github.com/testra/testra-cli/internal/utils/datetime"
 	"strings"
-	"github.com/testra-tech/testra-cli/api/models"
+	"github.com/testra/testra-cli/api/models"
 )
 
 func MapToTestExecution(projectId string, execution *models.Execution) TestExecution {

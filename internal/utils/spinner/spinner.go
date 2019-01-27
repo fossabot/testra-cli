@@ -3,7 +3,7 @@ package spinner
 import (
 	"fmt"
 	"github.com/caarlos0/spin"
-	"github.com/testra-tech/testra-cli/internal/constants/colors"
+	"github.com/testra/testra-cli/internal/constants/colors"
 )
 
 var s = spin.New(colors.Blue + "%s Loading..." + colors.Reset)

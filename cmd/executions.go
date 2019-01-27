@@ -6,8 +6,8 @@ import (
 		"errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/testra-tech/testra-cli/internal/config"
-	"github.com/testra-tech/testra-cli/internal/execution"
+	"github.com/testra/testra-cli/internal/config"
+	"github.com/testra/testra-cli/internal/execution"
 			)
 
 // executionsCmd represents the executions command
@@ -104,7 +104,7 @@ func init() {
 	createExecutionCmd.Flags().StringP(PROJECT_ID_FLAG_NAME, "p", viper.GetString("defaultProjectId"), "Project Id")
 	createExecutionCmd.Flags().StringP("description", "d", EMPTY_STR, "Short description about the test execution")
 	createExecutionCmd.Flags().Bool("parallel", false, "Is tests run in parallel")
-	createExecutionCmd.Flags().StringP("host", "h", EMPTY_STR, "hostname where the tests are going to be executed")
+	createExecutionCmd.Flags().String("host", EMPTY_STR, "hostname where the tests are going to be executed")
 	createExecutionCmd.Flags().StringP("env", "e", EMPTY_STR, "Target test environment")
 	createExecutionCmd.Flags().StringP("branch", "b", EMPTY_STR, "VCS (Git, SVN..) branch")
 	createExecutionCmd.Flags().String("buildRef", EMPTY_STR, "CI build reference")

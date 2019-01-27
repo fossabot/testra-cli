@@ -5,8 +5,8 @@ import (
 
 	"errors"
 	"github.com/spf13/cobra"
-	"github.com/testra-tech/testra-cli/internal/config"
-	"github.com/testra-tech/testra-cli/internal/result"
+	"github.com/testra/testra-cli/internal/config"
+	"github.com/testra/testra-cli/internal/result"
 )
 
 // resultsCmd represents the results command

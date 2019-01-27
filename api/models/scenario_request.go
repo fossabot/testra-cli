@@ -28,9 +28,11 @@ type ScenarioRequest struct {
 	// before
 	Before []*TestStep `json:"before"`
 
+	// data rows
+	DataRows []*DataTableRow `json:"dataRows"`
+
 	// feature description
-	// Required: true
-	FeatureDescription *string `json:"featureDescription"`
+	FeatureDescription string `json:"featureDescription,omitempty"`
 
 	// feature name
 	// Required: true
@@ -42,6 +44,9 @@ type ScenarioRequest struct {
 	// name
 	// Required: true
 	Name *string `json:"name"`
+
+	// namespace
+	Namespace string `json:"namespace,omitempty"`
 
 	// steps
 	// Required: true
@@ -67,7 +72,7 @@ func (m *ScenarioRequest) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateFeatureDescription(formats); err != nil {
+	if err := m.validateDataRows(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -164,10 +169,26 @@ func (m *ScenarioRequest) validateBefore(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *ScenarioRequest) validateFeatureDescription(formats strfmt.Registry) error {
+func (m *ScenarioRequest) validateDataRows(formats strfmt.Registry) error {
 
-	if err := validate.Required("featureDescription", "body", m.FeatureDescription); err != nil {
-		return err
+	if swag.IsZero(m.DataRows) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.DataRows); i++ {
+		if swag.IsZero(m.DataRows[i]) { // not required
+			continue
+		}
+
+		if m.DataRows[i] != nil {
+			if err := m.DataRows[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("dataRows" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

@@ -2,7 +2,7 @@ package datetime
 
 import (
 	"time"
-	"github.com/testra-tech/testra-cli/internal/constants/strs"
+	"github.com/testra/testra-cli/internal/constants/strs"
 )
 
 const DATE_TIME_FORMAT = "_2 Jan 2006 15:04:05"

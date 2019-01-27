@@ -6,6 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
@@ -16,6 +18,9 @@ import (
 // TestStep TestStep
 // swagger:model TestStep
 type TestStep struct {
+
+	// data table rows
+	DataTableRows []*DataTableRow `json:"dataTableRows"`
 
 	// index
 	// Required: true
@@ -30,6 +35,10 @@ type TestStep struct {
 func (m *TestStep) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateDataTableRows(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateIndex(formats); err != nil {
 		res = append(res, err)
 	}
@@ -41,6 +50,31 @@ func (m *TestStep) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *TestStep) validateDataTableRows(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.DataTableRows) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.DataTableRows); i++ {
+		if swag.IsZero(m.DataTableRows[i]) { // not required
+			continue
+		}
+
+		if m.DataTableRows[i] != nil {
+			if err := m.DataTableRows[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("dataTableRows" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

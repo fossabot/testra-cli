@@ -3,8 +3,8 @@ package notif
 import (
 	"gopkg.in/kyokomi/emoji.v1"
 	"fmt"
-	"github.com/testra-tech/testra-cli/internal/constants/colors"
-	consoleWriter "github.com/testra-tech/testra-cli/internal/utils/console/writer"
+	"github.com/testra/testra-cli/internal/constants/colors"
+	consoleWriter "github.com/testra/testra-cli/internal/utils/console/writer"
 )
 
 var infoEmoji = emoji.Sprint(":information_source: ")

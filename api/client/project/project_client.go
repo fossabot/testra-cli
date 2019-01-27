@@ -113,6 +113,36 @@ func (a *Client) GetProject(params *GetProjectParams) (*GetProjectOK, error) {
 }
 
 /*
+GetProjectCounters gets couters for project children
+
+Returns counts of Executions, Results, Scenarios, Testcases, SImulations and Vulnerability alerts
+*/
+func (a *Client) GetProjectCounters(params *GetProjectCountersParams) (*GetProjectCountersOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetProjectCountersParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "getProjectCounters",
+		Method:             "GET",
+		PathPattern:        "/projects/{id}/counters",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &GetProjectCountersReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*GetProjectCountersOK), nil
+
+}
+
+/*
 GetProjects lists all projects
 
 Returns list of all projects available
@@ -140,6 +170,37 @@ func (a *Client) GetProjects(params *GetProjectsParams) (*GetProjectsOK, error) 
 		return nil, err
 	}
 	return result.(*GetProjectsOK), nil
+
+}
+
+/*
+TopProjects tops projects
+
+Returns list of top projects sorted by no of executions
+
+*/
+func (a *Client) TopProjects(params *TopProjectsParams) (*TopProjectsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewTopProjectsParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "topProjects",
+		Method:             "GET",
+		PathPattern:        "/projects/top",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http", "https"},
+		Params:             params,
+		Reader:             &TopProjectsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*TopProjectsOK), nil
 
 }
 

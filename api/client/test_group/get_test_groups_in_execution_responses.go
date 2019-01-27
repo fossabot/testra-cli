@@ -13,7 +13,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	models "github.com/testra-tech/testra-cli/api/models"
+	models "github.com/testra/testra-cli/api/models"
 )
 
 // GetTestGroupsInExecutionReader is a Reader for the GetTestGroupsInExecution structure.

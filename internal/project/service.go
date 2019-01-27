@@ -1,14 +1,14 @@
 package project
 
 import (
-	"github.com/testra-tech/testra-cli/api/models"
-	"github.com/testra-tech/testra-cli/api"
-	"github.com/testra-tech/testra-cli/api/client/project"
-	"github.com/testra-tech/testra-cli/internal/check"
+	"github.com/testra/testra-cli/api/models"
+	"github.com/testra/testra-cli/api"
+	"github.com/testra/testra-cli/api/client/project"
+	"github.com/testra/testra-cli/internal/check"
 )
 
 func CreateProject(name string, desc string) (*project.CreateProjectCreated, error) {
-	body := models.ProjectRequest{Description: desc, Name: &name}
+	body := models.ProjectRequest{Description: &desc, Name: &name}
 	createProjectParams := project.
 		NewCreateProjectParams().
 		WithBody(&body)
@@ -16,7 +16,7 @@ func CreateProject(name string, desc string) (*project.CreateProjectCreated, err
 }
 
 func UpdateProject(id string, name string, desc string) (*project.UpdateProjectOK, error) {
-	body := models.ProjectRequest{Description: desc, Name: &name}
+	body := models.ProjectRequest{Description: &desc, Name: &name}
 	updateProjectParams := project.
 		NewUpdateProjectParams().
 		WithBody(&body).

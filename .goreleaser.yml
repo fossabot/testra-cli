@@ -52,12 +52,12 @@ git:
 
 brew:
   github:
-    owner: testra-tech
+    owner: testra
     name: homebrew-tap
   commit_author:
-    name: testra-tech
+    name: testra
     email: testra2018@gmail.com
   folder: Formula
-  homepage: "https://github.com/testra-tech/testra-cli"
+  homepage: "https://github.com/testra/testra-cli"
   description: "a CLI for Testra"
   skip_upload: false

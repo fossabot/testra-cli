@@ -2,19 +2,19 @@ package execution
 
 import (
 	"fmt"
-	"github.com/testra-tech/testra-cli/internal/check"
-	"github.com/testra-tech/testra-cli/internal/constants/colors"
-	consolewriter "github.com/testra-tech/testra-cli/internal/utils/console/writer"
+	"github.com/testra/testra-cli/internal/check"
+	"github.com/testra/testra-cli/internal/constants/colors"
+	consolewriter "github.com/testra/testra-cli/internal/utils/console/writer"
 	"github.com/gosuri/uilive"
-	"github.com/testra-tech/testra-cli/internal/utils/keyevents"
+	"github.com/testra/testra-cli/internal/utils/keyevents"
 	"time"
 	"os"
 	"io"
-	"github.com/testra-tech/testra-cli/internal/commons"
+	"github.com/testra/testra-cli/internal/commons"
 	"github.com/spf13/cobra"
-	"github.com/testra-tech/testra-cli/internal/constants/flags"
-	"github.com/testra-tech/testra-cli/api/models"
-	"github.com/testra-tech/testra-cli/internal/utils/console/reader"
+	"github.com/testra/testra-cli/internal/constants/flags"
+	"github.com/testra/testra-cli/api/models"
+	"github.com/testra/testra-cli/internal/utils/console/reader"
 	"strconv"
 )
 

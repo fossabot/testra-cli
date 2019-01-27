@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"os"
-	"github.com/testra-tech/testra-cli/internal/utils/notif"
+	"github.com/testra/testra-cli/internal/utils/notif"
 )
 
 func GetResolvedProjectId(cmd *cobra.Command) string {

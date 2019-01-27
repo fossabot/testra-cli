@@ -1,9 +1,9 @@
 package execution
 
 import (
-	"github.com/testra-tech/testra-cli/api"
-	"github.com/testra-tech/testra-cli/api/client/execution"
-	"github.com/testra-tech/testra-cli/api/models"
+	"github.com/testra/testra-cli/api"
+	"github.com/testra/testra-cli/api/client/execution"
+	"github.com/testra/testra-cli/api/models"
 )
 
 func CreateExecution(projectId string,

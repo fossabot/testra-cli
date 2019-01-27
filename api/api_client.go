@@ -2,11 +2,11 @@ package api
 
 import (
 	"github.com/go-openapi/strfmt"
-	"github.com/testra-tech/testra-cli/api/client"
+	"github.com/testra/testra-cli/api/client"
 
 	httpTransport "github.com/go-openapi/runtime/client"
 	"github.com/spf13/viper"
-	apiClient "github.com/testra-tech/testra-cli/api/client"
+	apiClient "github.com/testra/testra-cli/api/client"
 )
 
 func NewTestraClient() *client.Testra {

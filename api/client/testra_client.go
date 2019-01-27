@@ -11,13 +11,15 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/testra-tech/testra-cli/api/client/counter"
-	"github.com/testra-tech/testra-cli/api/client/execution"
-	"github.com/testra-tech/testra-cli/api/client/project"
-	"github.com/testra-tech/testra-cli/api/client/result"
-	"github.com/testra-tech/testra-cli/api/client/scenario"
-	"github.com/testra-tech/testra-cli/api/client/test_group"
-	"github.com/testra-tech/testra-cli/api/client/testcase"
+	"github.com/testra/testra-cli/api/client/counter"
+	"github.com/testra/testra-cli/api/client/execution"
+	"github.com/testra/testra-cli/api/client/project"
+	"github.com/testra/testra-cli/api/client/result"
+	"github.com/testra/testra-cli/api/client/scenario"
+	"github.com/testra/testra-cli/api/client/security_scan"
+	"github.com/testra/testra-cli/api/client/simulation"
+	"github.com/testra/testra-cli/api/client/test_group"
+	"github.com/testra/testra-cli/api/client/testcase"
 )
 
 // Default testra HTTP client.
@@ -26,7 +28,7 @@ var Default = NewHTTPClient(nil)
 const (
 	// DefaultHost is the default Host
 	// found in Meta (info) section of spec file
-	DefaultHost string = "testra-api.herokuapp.com"
+	DefaultHost string = "localhost:8085"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
 	DefaultBasePath string = "/api/v1/"
@@ -72,6 +74,10 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Testra {
 	cli.Result = result.New(transport, formats)
 
 	cli.Scenario = scenario.New(transport, formats)
+
+	cli.SecurityScan = security_scan.New(transport, formats)
+
+	cli.Simulation = simulation.New(transport, formats)
 
 	cli.TestGroup = test_group.New(transport, formats)
 
@@ -131,6 +137,10 @@ type Testra struct {
 
 	Scenario *scenario.Client
 
+	SecurityScan *security_scan.Client
+
+	Simulation *simulation.Client
+
 	TestGroup *test_group.Client
 
 	Testcase *testcase.Client
@@ -151,6 +161,10 @@ func (c *Testra) SetTransport(transport runtime.ClientTransport) {
 	c.Result.SetTransport(transport)
 
 	c.Scenario.SetTransport(transport)
+
+	c.SecurityScan.SetTransport(transport)
+
+	c.Simulation.SetTransport(transport)
 
 	c.TestGroup.SetTransport(transport)
 

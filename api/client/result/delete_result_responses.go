@@ -13,7 +13,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	models "github.com/testra-tech/testra-cli/api/models"
+	models "github.com/testra/testra-cli/api/models"
 )
 
 // DeleteResultReader is a Reader for the DeleteResult structure.

@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"github.com/testra-tech/testra-cli/internal/config"
+	"github.com/testra/testra-cli/internal/config"
 )
 
 var configCmd = &cobra.Command{

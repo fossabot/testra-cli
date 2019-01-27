@@ -1,11 +1,11 @@
 package result
 
 import (
-	"github.com/testra-tech/testra-cli/api"
-	"github.com/testra-tech/testra-cli/api/client/result"
+	"github.com/testra/testra-cli/api"
+	"github.com/testra/testra-cli/api/client/result"
 
 	"strings"
-	"github.com/testra-tech/testra-cli/api/client/test_group"
+	"github.com/testra/testra-cli/api/client/test_group"
 )
 
 func GetResults(projectId string, execId string, status string) (*result.GetResultsOK, error) {

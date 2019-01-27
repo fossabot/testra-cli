@@ -3,10 +3,10 @@ package commons
 import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/testra-tech/testra-cli/internal/utils/notif"
+	"github.com/testra/testra-cli/internal/utils/notif"
 	"os"
-	"github.com/testra-tech/testra-cli/internal/constants/strs"
-	"github.com/testra-tech/testra-cli/internal/constants/flags"
+	"github.com/testra/testra-cli/internal/constants/strs"
+	"github.com/testra/testra-cli/internal/constants/flags"
 )
 
 func GetResolvedProjectId(cmd *cobra.Command) string {
