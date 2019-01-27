@@ -1,4 +1,36 @@
 language: go
+go:
+  - "1.11.x"
+
+env:
+  # needed for the snap pipe:
+  - PATH=/snap/bin:$PATH GITHUB_TOKEN=$GITHUB_TOKEN
+
+git:
+  depth: 1
+
+notifications:
+  email: false
+
+before_script:
+  - go install -mod vendor github.com/golangci/golangci-lint/cmd/golangci-lint
+
+script:
+  - golangci-lint run
+  - go test -v -race ./...
+
+after_success:
+  - test -n "$TRAVIS_TAG"
+
+# calls goreleaser
+deploy:
+  - provider: script
+  skip_cleanup: true
+  script:
+    - curl -sL https://git.io/goreleaser | bash
+  on:
+    tags: true
+    condition: $TRAVIS_OS_NAME = linux
 
 #addons:
 #  apt:
@@ -7,20 +39,3 @@ language: go
 #    - rpm
 #    # needed for the snap pipe:
 #    - snapd
-
-env:
-# needed for the snap pipe:
-- PATH=/snap/bin:$PATH GITHUB_TOKEN=$GITHUB_TOKEN
-
-after_success:
-- test -n "$TRAVIS_TAG"
-
-# calls goreleaser
-deploy:
-- provider: script
-  skip_cleanup: true
-  script:
-    - curl -sL https://git.io/goreleaser | bash
-  on:
-    tags: true
-    condition: $TRAVIS_OS_NAME = linux
