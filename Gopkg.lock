@@ -116,11 +116,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:731022b436cdb9b4b2a53be2ead693467a1474b8b873d4f90cb424fffdc3d0ff"
+  digest = "1:0b66bf36a53b887e6e544ae8351d552803d6895969a884f60450240cc11f4910"
   name = "github.com/go-openapi/swag"
   packages = ["."]
   pruneopts = "UT"
-  revision = "2b0bd4f193d011c203529df626a65d63cb8a79e8"
+  revision = "b28747f5c7f9eb6b0b82d2f87f365fff72b535c9"
 
 [[projects]]
   branch = "master"
@@ -301,8 +301,8 @@
   version = "v1.0.2"
 
 [[projects]]
-  branch = "api-version-0.6-upgrade"
-  digest = "1:7986e896d42a52b0fb3841ae165e48569c791b4a74cdd148c4a3e9f1524cf94b"
+  branch = "master"
+  digest = "1:d618adf0861bf87ea3a5f23f60941271d750d02c328e5fdaf26ee999d09c8bd0"
   name = "github.com/testra/testra-cli"
   packages = [
     "api",
@@ -339,7 +339,7 @@
     "internal/utils/urls",
   ]
   pruneopts = "UT"
-  revision = "e4f5a3145e4151f46bab1c8352957edbfcdc2b65"
+  revision = "d9a54fb780f9da3f95684e3b3d8f674fe0c80e98"
 
 [[projects]]
   branch = "master"
