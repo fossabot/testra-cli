@@ -343,7 +343,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:ccdd1ad197b5b65f3b2320a4ed3f2d7b97fdfd41a59f1511fd4f28a3c2310556"
+  digest = "1:1161a44b3d454b130dbe9afdef7a4cc2bcefec1add13ca10837f8021a0e67c19"
   name = "golang.org/x/net"
   packages = [
     "context",
@@ -351,7 +351,7 @@
     "idna",
   ]
   pruneopts = "UT"
-  revision = "32a936f46389aa10549d60bd7833e54b01685d09"
+  revision = "65e2d4e15006aab9813ff8769e768bbf4bb667a0"
 
 [[projects]]
   branch = "master"
